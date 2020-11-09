@@ -97,7 +97,6 @@ $result = $client->solve(null, $extra);
 Please see [CHANGELOG](CHANGELOG.md) for notable changes.
 
 ## Credits
-Idea based on [juniorb2ss/deathbycaptcha-php-sdk](https://raw.githubusercontent.com/juniorb2ss/deathbycaptcha-php-sdk).
 
 - [Daniel Binsmaier](https://github.com/danielbinsmaier)
 - [All contributors](../../contributors)
