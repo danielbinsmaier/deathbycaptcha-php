@@ -1,0 +1,26 @@
+{
+  "name": "danielbinsmaier/deathbycaptcha-php",
+  "type": "package",
+  "description": "Convenience wrapper around the official DeathByCaptcha PHP library.",
+  "homepage": "https://github.com/danielbinsmaier/deathbycaptcha-php",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Daniel Binsmaier",
+      "email": "daniel.binsmaier@gmail.com",
+      "homepage": "https://github.com/danielbinsmaier",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.0",
+    "ext-curl": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "DanielBinsmaier\\DeathByCaptcha\\": "src/"
+    }
+  },
+  "minimum-stability": "stable"
+}
