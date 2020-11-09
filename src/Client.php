@@ -78,6 +78,64 @@ class Client {
     }
 
     /**
+     * Convenience function for reCAPTCHA v2.
+     * @see upload()
+     *
+     * @param string $sitekey
+     * @param string $url
+     * @param array $extra
+     * @return Captcha|null
+     * @throws Exceptions\InvalidCaptchaException
+     */
+    public function uploadRecaptchaV2($sitekey, $url, $extra = [])
+    {
+        $data = [
+            'googlekey' => $sitekey,
+            'pageurl' => $url
+        ];
+
+        $params = json_encode(array_merge($data, $extra));
+
+        $payload = [
+            'type' => 4,
+            'token_params' => $params
+        ];
+
+        return $this->upload(null, $payload);
+    }
+
+    /**
+     * Convenience function for reCAPTCHA v3.
+     * @see upload()
+     *
+     * @param string $sitekey
+     * @param string $url
+     * @param string $action
+     * @param float $minScore
+     * @param array $extra
+     * @return Captcha|null
+     * @throws Exceptions\InvalidCaptchaException
+     */
+    public function uploadRecaptchaV3($sitekey, $url, $action, $minScore = 0.3, $extra = [])
+    {
+        $data = [
+            'googlekey' => $sitekey,
+            'pageurl' => $url,
+            'action' => $action,
+            'min_score' => $minScore
+        ];
+
+        $params = json_encode(array_merge($data, $extra));
+
+        $payload = [
+            'type' => 5,
+            'token_params' => $params
+        ];
+
+        return $this->upload(null, $payload);
+    }
+
+    /**
      * Uploads the captcha and instantly waits for it being solved.
      * Returns either null if timeout or failed to upload or otherwise the text of the captcha.
      *
@@ -90,6 +148,52 @@ class Client {
     public function solve($captcha, $extra = [], $timeout = \DanielBinsmaier\DeathByCaptcha\Clients\Client::DEFAULT_TIMEOUT)
     {
         $captcha = $this->upload($captcha, $extra);
+
+        if ($captcha === null) {
+            return null;
+        }
+
+        return $captcha->solve($timeout);
+    }
+
+    /**
+     * Convenience function for reCAPTCHA v2.
+     * @see solve()
+     *
+     * @param string $sitekey
+     * @param string $url
+     * @param array $extra
+     * @param int $timeout
+     * @return string|null
+     * @throws Exceptions\InvalidCaptchaException
+     */
+    public function solveRecaptchaV2($sitekey, $url, $extra = [], $timeout = \DanielBinsmaier\DeathByCaptcha\Clients\Client::DEFAULT_TIMEOUT)
+    {
+        $captcha = $this->uploadRecaptchaV2($sitekey, $url, $extra);
+
+        if ($captcha === null) {
+            return null;
+        }
+
+        return $captcha->solve($timeout);
+    }
+
+    /**
+     * Convenience function for reCAPTCHA v3.
+     * @see solve()
+     *
+     * @param string $sitekey
+     * @param string $url
+     * @param string $action
+     * @param float $minScore
+     * @param array $extra
+     * @param int $timeout
+     * @return string|null
+     * @throws Exceptions\InvalidCaptchaException
+     */
+    public function solveRecaptchaV3($sitekey, $url, $action, $minScore = 0.3, $extra = [], $timeout = \DanielBinsmaier\DeathByCaptcha\Clients\Client::DEFAULT_TIMEOUT)
+    {
+        $captcha = $this->uploadRecaptchaV3($sitekey, $url, $action, $minScore, $extra);
 
         if ($captcha === null) {
             return null;
