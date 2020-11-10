@@ -150,7 +150,7 @@ class SocketClient extends Client
                         );
                     default:
                         throw new ServerException(
-                            'API server error occured: ' . $error
+                            'API server error occured: ' . $response['error']
                         );
                 }
             } else {
