@@ -2,6 +2,10 @@
 
 All notable changes to `deathbycaptcha-php` will be documented in this file
 
+## 1.1.1 - 2020-11-11
+
+- fix undefined variable in SocketClient class
+
 ## 1.1.0 - 2020-09-11
 
 - add convenience functions for reCAPTCHA v2
